@@ -9,10 +9,13 @@ class TasksController < ApplicationController
   end
   
   def show
+
   end
 
   def new
+    if logged_in?
     @task = Task.new
+    end
   end
   
   
@@ -31,20 +34,24 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      flash[:success] = 'タスク が正常に更新されました'
-      redirect_to @task
-    else
-      flash.now[:danger] = 'タスク が正常に更新されませんでした'
-      render :new
+    if logged_in?
+      if @task.update(task_params)
+        flash[:success] = 'タスク が正常に更新されました'
+        redirect_to @task
+      else
+        flash.now[:danger] = 'タスク が正常に更新されませんでした'
+        render :new
+      end
     end
   end
 
   def destroy
-    @task.destroy
+    if logged_in?
+      @task.destroy
 
-    flash[:success] = 'タスク は正常に削除されました'
-    redirect_to tasks_url
+      flash[:success] = 'タスク は正常に削除されました'
+      redirect_to tasks_url
+    end
   end
   
   private

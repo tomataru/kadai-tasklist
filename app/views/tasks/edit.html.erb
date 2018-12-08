@@ -1,5 +1,13 @@
 <h1>id: <%= @task.id %> のメッセージ編集ページ</h1>
 
+<% if logged_in? %>
 <%= render 'form', task: @task %>
-
 <%= link_to '一覧に戻る', tasks_path %>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h3>ログインもしくは登録をしてください。</h3>
+      <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+  </div>
+<% end %>
